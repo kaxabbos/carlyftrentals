@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="${auto.name}"></title>
+</head>
+
+<head th:insert="blocks/head :: head"></head>
+<body class="d-flex flex-column min-vh-100" style="background: url(&quot;/img/def/bg.png&quot;) top / cover;">
+<div th:insert="blocks/nav :: nav"></div>
+<main class="page product-page">
+    <section class="clean-block clean-product">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-warning" th:text="${auto.name}"></h2>
+            </div>
+            <div class="block-content">
+                <div class="product-warning">
+                    <div class="row" align="center">
+                        <div class="col">
+                            <div class="warning">
+                                <h3 style="font-weight: bold;">Стоимость в сутки: <span th:text="${auto.price}"></span>
+                                </h3>
+                                <div class="summary">
+                                    <p style="font-size: 20px;">Статус:&nbsp;
+                                        <span th:if="${auto.free}" style="color: var(--bs-green);">Свободен</span>
+                                        <span th:unless="${auto.free}" style="color: var(--bs-red);">Арендован</span>
+                                    </p>
+                                </div>
+                                <div th:if="${role == 'MANAGER'}" class="summary mb-3">
+                                    <a th:href="'/autos/edit/' + ${auto.id}" class="btn btn-warning" type="button"
+                                       style="margin-right: 15px;">
+                                        Редактировать
+                                    </a>
+                                    <a th:if="${auto.free}" th:href="'/autos/delete/' + ${auto.id}" class="btn btn-danger"
+                                       type="button">Удалить</a>
+                                </div>
+                                <div th:if="${role == 'CLIENT' and auto.free}" class="summary">
+                                    <form method="post" th:action="'/autos/rent/' + ${auto.id}">
+                                        <div class="row">
+                                            <div class="col-4"></div>
+                                            <div class="col-2">
+                                                <input class="form-control" type="number" name="days"
+                                                       min="1" max="100" step="1" placeholder="Дней"></div>
+                                            <div class="col-2">
+                                                <button class="btn btn-warning w-100" type="submit">Арендовать</button>
+                                            </div>
+                                            <div class="col-4"></div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="summary">
+                                    <p th:text="${auto.description.description}"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" align="center">
+                    <div class="col-12"><p class="lead">Марка авто: <span
+                            th:text="${auto.description.brand.name}"></span></p></div>
+                    <div class="col-12"><p class="lead">Класс автомобиля: <span
+                            th:text="${auto.description.classes.name}"></span></p></div>
+                    <div class="col-12"><p class="lead">Цвет автомобиля: <span
+                            th:text="${auto.description.color.name}"></span></p></div>
+                    <div class="col-12"><p class="lead">Арендовано раз: <span
+                            th:text="${auto.description.average}"></span></p></div>
+                </div>
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-8">
+                        <div id="carouselExample" class="carousel slide">
+                            <div class="carousel-inner">
+                                <div th:each="p : ${auto.photos}" class="carousel-item active">
+                                    <img th:src="'/img/' + ${p}" class="d-block w-100">
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
+                                    data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
+                                    data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script src="/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.1/baguetteBox.min.js"></script>
+<script src="/js/vanilla-zoom.js"></script>
+<script src="/js/theme.js"></script>
+</body>
+
+</html>

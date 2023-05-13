@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>История аренды</title>
+</head>
+
+<head th:insert="blocks/head :: head"></head>
+
+<body class="d-flex flex-column min-vh-100" style="background: url(&quot;/img/def/bg.png&quot;) top / cover;">
+<div th:insert="blocks/nav :: nav"></div>
+<main class="page catalog-page">
+    <section class="clean-block clean-catalog">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-warning">История аренды</h2>
+            </div>
+            <div class="content">
+                <div class="row g-0">
+                    <div th:each="c : ${autos}" class="col-3 p-3">
+                        <a th:href="'/autos/' + ${c.id}">
+                            <img class="img-fluid d-block mx-auto rounded-5 shadow mb-3 w-100"
+                                 th:src="'/img/' + ${c.photos[0]}">
+                        </a>
+                        <p class="lead">
+                            <a th:href="'/autos/' + ${c.id}" th:text="${c.name}"></a>
+                        </p>
+                        <p>Марка авто: <span th:text="${c.description.brand.name}"></span></p>
+                        <p>Класс автомобиля: <span th:text="${c.description.classes.name}"></span></p>
+                        <a class="btn btn-warning w-100" role="button" th:href="'/autos/return/' + ${c.id}">Завершить</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script src="/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.1/baguetteBox.min.js"></script>
+<script src="/js/vanilla-zoom.js"></script>
+<script src="/js/theme.js"></script>
+</body>
+
+</html>

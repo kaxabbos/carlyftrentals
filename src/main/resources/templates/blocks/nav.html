@@ -1,0 +1,24 @@
+<nav th:fragment="nav" class="navbar navbar-light navbar-expand-lg clean-navbar" style="background: #d5f0f2">
+    <div class="container"><a class="navbar-brand logo" href="/">CarLyftRentals</a>
+        <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span
+                class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navcol-1">
+            <ul class="navbar-nav ms-auto">
+                <li th:if="${role == 'MANAGER'}" class="nav-item"><a class="nav-link" href="/autos/add">Пополнить список автопарка</a></li>
+                <li th:if="${role == 'ADMIN'}"class="nav-item"><a class="nav-link" href="/users">Клиентская база</a></li>
+                <li th:if="${role == 'ADMIN'}"class="nav-item"><a class="nav-link" href="/stats">Финансовая деятельность</a></li>
+                <li class="nav-item"><a class="nav-link" href="/">Свободное авто</a></li>
+                <li class="nav-item"><a class="nav-link" href="/map">Мы на карте</a></li>
+                <li class="nav-item"><a class="nav-link" href="/edu">Обучение</a></li>
+                <li th:if="${role == 'CLIENT'}"class="nav-item"><a class="nav-link" href="/autos/my">История аренды</a></li>
+                <li th:if="${role == 'NOT'}"class="nav-item"><a class="nav-link" href="/login">Авторизация</a></li>
+                <li th:if="${role == 'NOT'}"class="nav-item"><a class="nav-link" href="/reg">Создание профиля</a></li>
+                <li th:if="${role != 'NOT'}" class="nav-item">
+                    <form action="/logout" method="post">
+                        <button class="btn" type="submit">Выход</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Свободное авто</title>
+</head>
+
+<head th:insert="blocks/head :: head"></head>
+
+<body class="d-flex flex-column min-vh-100" style="background: url(&quot;/img/def/bg.png&quot;) top / cover;">
+
+<div th:insert="blocks/nav :: nav"></div>
+
+<main class="page catalog-page">
+    <section class="clean-block clean-catalog">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-warning">Свободное авто</h2>
+            </div>
+            <div class="content">
+                <div class="row p-3">
+                    <div class="col-12">
+                        <form method="post" action="/search">
+                            <div class="row">
+                                <div class="col">
+                                    <h3>Марка авто</h3>
+                                    <select class="form-select" name="brand">
+                                        <option th:each="b : ${brands}" th:value="${b}" th:label="${b.name}"
+                                                th:selected="${b == bSelect}"></option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <h3>Цвет автомобиля</h3>
+                                    <select class="form-select" name="color">
+                                        <option th:each="t : ${colors}" th:value="${t}" th:label="${t.name}"
+                                                th:selected="${t == tSelect}"></option>
+                                    </select>
+                                </div>
+                                <div class="col-auto">
+                                    <button class="btn btn-warning mb-2 w-100" type="submit"
+                                            style="margin-right: 10px;">Найти
+                                    </button>
+                                    <a class="btn btn-secondary w-100" role="button" href="/">Сбросить</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-12">
+                        <div class="row g-0">
+                            <div th:each="c : ${autos}" class="col-3 p-3">
+                                <a th:href="'/autos/' + ${c.id}">
+                                    <img class="img-fluid d-block mx-auto rounded-5 shadow w-100 mb-3"
+                                         th:src="'/img/' + ${c.photos[0]}">
+                                </a>
+                                <p class="lead">
+                                    <a th:href="'/autos/' + ${c.id}" th:text="${c.name}"></a>
+                                </p>
+                                <p>Марка авто: <span th:text="${c.description.brand.name}"></span></p>
+                                <p>Стоимость в сутки: <span th:text="${c.price}"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+<script src="/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.1/baguetteBox.min.js"></script>
+<script src="/js/vanilla-zoom.js"></script>
+<script src="/js/theme.js"></script>
+
+</body>
+
+</html>
